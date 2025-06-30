@@ -44,6 +44,12 @@ public class ProductFacade extends AbstractFacade<Product> {
         }
     }
 
+    public List<Product> findByForGenderList(List<String> genders) {
+        return em.createQuery("SELECT p FROM Product p WHERE p.forGender IN :genders", Product.class)
+                .setParameter("genders", genders)
+                .getResultList();
+    }
+
     public ProductFacade() {
         super(Product.class);
     }
