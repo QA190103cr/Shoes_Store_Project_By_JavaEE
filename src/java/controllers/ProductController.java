@@ -38,6 +38,7 @@ public class ProductController {
             @RequestParam(value = "gender", required = false) String[] genders,
             @RequestParam(value = "category", required = false) Integer[] categoryIds,
             @RequestParam(value = "brand", required = false) Integer[] brandIds,
+            @RequestParam(value = "search", required = false) String searchText,
             HttpServletRequest request
     ) {
         ModelAndView mv = new ModelAndView("layout", "folder", "products");
@@ -83,6 +84,13 @@ public class ProductController {
                         .filter(p -> p.getBrand() != null && brandSet.contains(p.getBrand().getId()))
                         .collect(Collectors.toList());
             }
+        }
+
+        if (searchText != null && !searchText.trim().isEmpty()) {
+            String lowerSearch = searchText.toLowerCase();
+            list = list.stream()
+                    .filter(p -> p.getName() != null && p.getName().toLowerCase().contains(lowerSearch))
+                    .collect(Collectors.toList());
         }
 
         mv.addObject("list", list);

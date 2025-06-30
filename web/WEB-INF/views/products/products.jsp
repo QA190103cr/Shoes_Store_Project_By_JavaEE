@@ -50,6 +50,35 @@
                 margin-bottom: 8px;
             }
 
+            .search-bar {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                margin-bottom: 24px;
+            }
+
+            .search-bar input[type="text"] {
+                flex: 1;
+                padding: 8px 12px;
+                border: 1px solid #ccc;
+                border-radius: 6px;
+                font-size: 14px;
+            }
+
+            .search-bar button {
+                padding: 8px 14px;
+                background-color: #0056d2;
+                color: white;
+                border: none;
+                border-radius: 6px;
+                font-weight: bold;
+                cursor: pointer;
+            }
+
+            .search-bar button:hover {
+                background-color: #003f9e;
+            }
+
             .filter-button {
                 margin-top: 16px;
                 padding: 8px 12px;
@@ -162,7 +191,7 @@
                 checkboxes.forEach(checkbox => {
                     checkbox.checked = false;
                 });
-                
+
                 // Redirect to clean URL without parameters
                 window.location.href = '${pageContext.request.contextPath}/products/products';
             }
@@ -170,30 +199,35 @@
     </head>
     <body>
         <div class="container">
+            <form method="get" action="<c:url value="/products/products" />" class="search-bar">
+                <input type="text" name="search" placeholder="Tìm theo tên sản phẩm" value="${param.search}" />
+                <button type="submit">Search</button>
+            </form>
+
             <h2 class="title">Sản phẩm nổi bật</h2>
 
             <div class="main-container">
                 <div class="filter-container">
                     <h2>Filter List</h2>
 
-                    <form method="get" action="${pageContext.request.contextPath}/products/products" class="filter-form">
+                    <form method="get" action="<c:url value="/products/products" />" class="filter-form">
                         <h3>Gender</h3>
                         <label class="filter-item">
                             <input type="checkbox" name="gender" value="male"
                                    <c:if test="${fn:contains(paramValues.gender, 'male')}">checked</c:if>> Male
-                        </label>
+                            </label>
 
-                        <label class="filter-item">
-                            <input type="checkbox" name="gender" value="female"
-                                   <c:if test="${fn:contains(paramValues.gender, 'female')}">checked</c:if>> Female
-                        </label>
+                            <label class="filter-item">
+                                <input type="checkbox" name="gender" value="female"
+                                <c:if test="${fn:contains(paramValues.gender, 'female')}">checked</c:if>> Female
+                            </label>
 
-                        <label class="filter-item">
-                            <input type="checkbox" name="gender" value="unisex"
-                                   <c:if test="${fn:contains(paramValues.gender, 'unisex')}">checked</c:if>> Unisex
-                        </label>
+                            <label class="filter-item">
+                                <input type="checkbox" name="gender" value="unisex"
+                                <c:if test="${fn:contains(paramValues.gender, 'unisex')}">checked</c:if>> Unisex
+                            </label>
 
-                        <h4>Category</h4>
+                            <h4>Category</h4>
                         <c:forEach var="c" items="${categories}">
                             <label class="filter-item">
                                 <input type="checkbox" name="category" value="${c.id}"
