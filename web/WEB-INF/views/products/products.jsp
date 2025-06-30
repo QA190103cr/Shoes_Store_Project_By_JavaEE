@@ -28,7 +28,7 @@
             display: flex;
             flex-wrap: wrap;
             gap: 30px;
-            justify-content: flex-end; /* ✅ đẩy tất cả card sang phải */
+            justify-content: flex-end; /* ✅ Đẩy toàn bộ sản phẩm qua phải */
         }
 
         .product-card {
@@ -103,14 +103,14 @@
         <c:forEach var="p" items="${list}">
             <div class="product-card">
                 <div class="product-image">
-                    <a href="${pageContext.request.contextPath}/products/detail?id=${p.id}">
+                    <a href="${pageContext.request.contextPath}/products/product-detail?id=${p.id}">
                         <img src="${pageContext.request.contextPath}/imgs/product-images/${p.images}" alt="${p.name}">
                     </a>
                 </div>
                 <div class="product-info">
                     <p class="label">Promo Exclusion</p>
 
-                    <a class="product-name" href="${pageContext.request.contextPath}/products/detail?id=${p.id}">
+                    <a class="product-name" href="${pageContext.request.contextPath}/products/product-detail?id=${p.id}">
                         ${p.name}
                     </a>
 
@@ -128,7 +128,7 @@
                         <fmt:formatNumber value="${p.price}" type="currency" currencySymbol="" />₫
                     </p>
 
-                    <a href="${pageContext.request.contextPath}/products/detail?id=${p.id}">
+                    <a href="${pageContext.request.contextPath}/products/product-detail?id=${p.id}">
                         Xem chi tiết
                     </a>
                 </div>
