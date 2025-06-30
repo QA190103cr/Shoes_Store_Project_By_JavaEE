@@ -74,7 +74,7 @@ public class Orders implements Serializable {
     private Date createdAt;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
-    private Users userId;
+    private User userId;
     @OneToMany(mappedBy = "orderId")
     private Collection<Payment> paymentCollection;
     @OneToMany(mappedBy = "orderId")
@@ -143,11 +143,11 @@ public class Orders implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public Users getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(Users userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 

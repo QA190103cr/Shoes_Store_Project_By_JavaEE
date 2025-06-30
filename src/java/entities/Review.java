@@ -70,7 +70,7 @@ public class Review implements Serializable {
     private Product productId;
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     @ManyToOne
-    private Users userId;
+    private User userId;
 
     public Review() {
     }
@@ -142,11 +142,11 @@ public class Review implements Serializable {
         this.productId = productId;
     }
 
-    public Users getUserId() {
+    public User getUserId() {
         return userId;
     }
 
-    public void setUserId(Users userId) {
+    public void setUserId(User userId) {
         this.userId = userId;
     }
 

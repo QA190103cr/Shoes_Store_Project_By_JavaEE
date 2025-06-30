@@ -22,6 +22,10 @@
         <property name="prefix" value="/WEB-INF/views/"/> <!-- view folder -->
         <property name="suffix" value=".jsp"/> <!-- Phần mở rộng -->
     </bean>
+    
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize" value="10485760" /> <!-- 10MB -->
+    </bean>
 
     <!--Mapping /images/(real name) to /imgs/(fake name)-->
     <mvc:resources mapping="/imgs/**" location="/images/" />

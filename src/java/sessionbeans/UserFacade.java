@@ -5,7 +5,7 @@
  */
 package sessionbeans;
 
-import entities.Users;
+import entities.User;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -16,7 +16,7 @@ import javax.persistence.PersistenceContext;
  * @author ASUS
  */
 @Stateless
-public class UsersFacade extends AbstractFacade<Users> {
+public class UserFacade extends AbstractFacade<User> {
 
     @PersistenceContext(unitName = "Shoes-Shopping-WebPU")
     private EntityManager em;
@@ -25,10 +25,10 @@ public class UsersFacade extends AbstractFacade<Users> {
     protected EntityManager getEntityManager() {
         return em;
     }
-
-    public Users findByEmail(String email) {
+    
+    public User findByEmail(String email) {
         try {
-            return em.createQuery("SELECT user FROM Users user WHERE user.email = :email", Users.class)
+            return em.createQuery("SELECT user FROM User user WHERE user.email = :email", User.class)
                     .setParameter("email", email)
                     .getSingleResult();
         } catch (NoResultException e) {
@@ -36,8 +36,8 @@ public class UsersFacade extends AbstractFacade<Users> {
         }
     }
 
-    public UsersFacade() {
-        super(Users.class);
+    public UserFacade() {
+        super(User.class);
     }
-
+    
 }

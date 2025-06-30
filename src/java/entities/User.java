@@ -30,21 +30,22 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author ASUS
  */
 @Entity
-@Table(name = "Users")
+@Table(name = "[User]")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Users.findAll", query = "SELECT u FROM Users u")
-    , @NamedQuery(name = "Users.findById", query = "SELECT u FROM Users u WHERE u.id = :id")
-    , @NamedQuery(name = "Users.findByFullName", query = "SELECT u FROM Users u WHERE u.fullName = :fullName")
-    , @NamedQuery(name = "Users.findByPhoneNumber", query = "SELECT u FROM Users u WHERE u.phoneNumber = :phoneNumber")
-    , @NamedQuery(name = "Users.findByEmail", query = "SELECT u FROM Users u WHERE u.email = :email")
-    , @NamedQuery(name = "Users.findByGender", query = "SELECT u FROM Users u WHERE u.gender = :gender")
-    , @NamedQuery(name = "Users.findByDateOfBirth", query = "SELECT u FROM Users u WHERE u.dateOfBirth = :dateOfBirth")
-    , @NamedQuery(name = "Users.findByHashPassword", query = "SELECT u FROM Users u WHERE u.hashPassword = :hashPassword")
-    , @NamedQuery(name = "Users.findByRole", query = "SELECT u FROM Users u WHERE u.role = :role")
-    , @NamedQuery(name = "Users.findByCreatedAt", query = "SELECT u FROM Users u WHERE u.createdAt = :createdAt")
-    , @NamedQuery(name = "Users.findByUpdatedAt", query = "SELECT u FROM Users u WHERE u.updatedAt = :updatedAt")})
-public class Users implements Serializable {
+    @NamedQuery(name = "User.findAll", query = "SELECT u FROM User u")
+    , @NamedQuery(name = "User.findById", query = "SELECT u FROM User u WHERE u.id = :id")
+    , @NamedQuery(name = "User.findByFullName", query = "SELECT u FROM User u WHERE u.fullName = :fullName")
+    , @NamedQuery(name = "User.findByAvatar", query = "SELECT u FROM User u WHERE u.avatar = :avatar")
+    , @NamedQuery(name = "User.findByPhoneNumber", query = "SELECT u FROM User u WHERE u.phoneNumber = :phoneNumber")
+    , @NamedQuery(name = "User.findByEmail", query = "SELECT u FROM User u WHERE u.email = :email")
+    , @NamedQuery(name = "User.findByGender", query = "SELECT u FROM User u WHERE u.gender = :gender")
+    , @NamedQuery(name = "User.findByDateOfBirth", query = "SELECT u FROM User u WHERE u.dateOfBirth = :dateOfBirth")
+    , @NamedQuery(name = "User.findByHashPassword", query = "SELECT u FROM User u WHERE u.hashPassword = :hashPassword")
+    , @NamedQuery(name = "User.findByRole", query = "SELECT u FROM User u WHERE u.role = :role")
+    , @NamedQuery(name = "User.findByCreatedAt", query = "SELECT u FROM User u WHERE u.createdAt = :createdAt")
+    , @NamedQuery(name = "User.findByUpdatedAt", query = "SELECT u FROM User u WHERE u.updatedAt = :updatedAt")})
+public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -57,6 +58,11 @@ public class Users implements Serializable {
     @Size(min = 1, max = 100)
     @Column(name = "full_name")
     private String fullName;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2147483647)
+    @Column(name = "avatar")
+    private String avatar;
     @Size(max = 20)
     @Column(name = "phone_number")
     private String phoneNumber;
@@ -97,16 +103,17 @@ public class Users implements Serializable {
     @OneToMany(mappedBy = "userId")
     private Collection<Review> reviewCollection;
 
-    public Users() {
+    public User() {
     }
 
-    public Users(Integer id) {
+    public User(Integer id) {
         this.id = id;
     }
 
-    public Users(Integer id, String fullName, String email, String gender, Date dateOfBirth, String hashPassword, String role) {
+    public User(Integer id, String fullName, String avatar, String email, String gender, Date dateOfBirth, String hashPassword, String role) {
         this.id = id;
         this.fullName = fullName;
+        this.avatar = avatar;
         this.email = email;
         this.gender = gender;
         this.dateOfBirth = dateOfBirth;
@@ -128,6 +135,14 @@ public class Users implements Serializable {
 
     public void setFullName(String fullName) {
         this.fullName = fullName;
+    }
+
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
     }
 
     public String getPhoneNumber() {
@@ -222,10 +237,10 @@ public class Users implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Users)) {
+        if (!(object instanceof User)) {
             return false;
         }
-        Users other = (Users) object;
+        User other = (User) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -234,7 +249,7 @@ public class Users implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Users[ id=" + id + " ]";
+        return "entities.User[ id=" + id + " ]";
     }
     
 }

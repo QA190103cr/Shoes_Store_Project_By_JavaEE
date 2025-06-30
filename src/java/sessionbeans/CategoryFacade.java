@@ -8,6 +8,7 @@ package sessionbeans;
 import entities.Category;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -23,6 +24,16 @@ public class CategoryFacade extends AbstractFacade<Category> {
     @Override
     protected EntityManager getEntityManager() {
         return em;
+    }
+    
+    public Category findById(int id) {
+        try {
+            return em.createQuery("SELECT category FROM Category category WHERE category.id = :id", Category.class)
+                    .setParameter("id", id)
+                    .getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     public CategoryFacade() {
