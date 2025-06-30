@@ -24,6 +24,15 @@ public class BrandFacade extends AbstractFacade<Brand> {
     protected EntityManager getEntityManager() {
         return em;
     }
+    
+    public void updateBrandWithoutLogo(Brand updatedBrand) {
+        Brand existingProduct = em.find(Brand.class, updatedBrand.getId());
+        if (existingProduct != null) {
+            existingProduct.setName(updatedBrand.getName());
+            
+            em.merge(existingProduct);
+        }
+    }
 
     public BrandFacade() {
         super(Brand.class);

@@ -185,6 +185,14 @@
                     <li class="menu-item">
                         <a href="<c:url value="/admin/product" />" >Product Management</a>
                     </li>
+                    
+                    <li class="menu-item">
+                        <a href="<c:url value="/admin/category" />" >Category Management</a>
+                    </li>
+                    
+                    <li class="menu-item">
+                        <a href="<c:url value="/admin/brand" />" >Brand Management</a>
+                    </li>
 
                     <li class="menu-item">
                         <a >User Management</a>
