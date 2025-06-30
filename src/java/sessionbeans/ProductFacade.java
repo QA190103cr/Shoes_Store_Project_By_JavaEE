@@ -7,6 +7,7 @@ package sessionbeans;
 
 import entities.Product;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -41,6 +42,12 @@ public class ProductFacade extends AbstractFacade<Product> {
             // existingProduct.setImages(...);
             em.merge(existingProduct);
         }
+    }
+
+    public List<Product> findByForGenderList(List<String> genders) {
+        return em.createQuery("SELECT p FROM Product p WHERE p.forGender IN :genders", Product.class)
+                .setParameter("genders", genders)
+                .getResultList();
     }
 
     public ProductFacade() {
