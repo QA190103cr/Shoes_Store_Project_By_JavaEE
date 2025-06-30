@@ -21,14 +21,29 @@
         .title {
             font-size: 28px;
             font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .sort-bar {
             margin-bottom: 30px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sort-bar select {
+            padding: 6px 12px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 14px;
         }
 
         .product-grid {
             display: flex;
             flex-wrap: wrap;
             gap: 30px;
-            justify-content: flex-end; /* ✅ Đẩy toàn bộ sản phẩm qua phải */
+            justify-content: flex-end;
         }
 
         .product-card {
@@ -99,7 +114,22 @@
 <div class="container">
     <h2 class="title">Sản phẩm nổi bật</h2>
 
-    <div class="product-grid">
+    <!-- ✅ Sort bar -->
+    <div class="sort-bar">
+        <form method="get" action="${pageContext.request.contextPath}/products">
+            <label for="sort-select">Sort by:</label>
+            <select id="sort-select" name="sort" onchange="this.form.submit()">
+                <option value="">-- Select --</option>
+                <option value="newest" ${param.sort == 'newest' ? 'selected' : ''}>Newest</option>
+                <option value="oldest" ${param.sort == 'oldest' ? 'selected' : ''}>Oldest</option>
+                <option value="price-asc" ${param.sort == 'price-asc' ? 'selected' : ''}>Price: Low to High</option>
+                <option value="price-desc" ${param.sort == 'price-desc' ? 'selected' : ''}>Price: High to Low</option>
+            </select>
+        </form>
+    </div>
+
+    <!-- ✅ Product grid -->
+    <div class="product-grid" id="product-list">
         <c:forEach var="p" items="${list}">
             <div class="product-card">
                 <div class="product-image">
@@ -109,11 +139,9 @@
                 </div>
                 <div class="product-info">
                     <p class="label">Promo Exclusion</p>
-
                     <a class="product-name" href="${pageContext.request.contextPath}/products/product-detail?id=${p.id}">
                         ${p.name}
                     </a>
-
                     <p class="product-type">
                         <c:choose>
                             <c:when test="${p.forGender == 'male'}">Men's Shoes</c:when>
@@ -121,13 +149,10 @@
                             <c:otherwise>Unisex Shoes</c:otherwise>
                         </c:choose>
                     </p>
-
                     <p class="product-color">1 Colour</p>
-
                     <p class="product-price">
                         <fmt:formatNumber value="${p.price}" type="currency" currencySymbol="" />₫
                     </p>
-
                     <a href="${pageContext.request.contextPath}/products/product-detail?id=${p.id}">
                         Xem chi tiết
                     </a>

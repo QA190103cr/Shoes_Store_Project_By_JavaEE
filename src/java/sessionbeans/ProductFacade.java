@@ -7,6 +7,7 @@ package sessionbeans;
 
 import entities.Product;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -46,5 +47,27 @@ public class ProductFacade extends AbstractFacade<Product> {
     public ProductFacade() {
         super(Product.class);
     }
+    
+   public List<Product> findAllSorted(String sortOption) {
+    String jpql = "SELECT p FROM Product p";
+    
+    switch (sortOption) {
+        case "newest":
+            jpql += " ORDER BY p.createdAt DESC";
+            break;
+        case "oldest":
+            jpql += " ORDER BY p.createdAt ASC";
+            break;
+        case "price-asc":
+            jpql += " ORDER BY p.price ASC";
+            break;
+        case "price-desc":
+            jpql += " ORDER BY p.price DESC";
+            break;
+    }
+
+    return em.createQuery(jpql, Product.class).getResultList();
+}
+
 
 }
